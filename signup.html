@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            justify-content: flex-end; /* Align content to the right */
+        }
+
+        .container {
+            width: 60%; /* Reduced width by 5cm */
+            background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent background */
+            padding: 15px; /* Reduce padding for compactness */
+            box-shadow: 0 0 10px rgba(248, 61, 61, 0.1);
+            border-radius: 8px;
+            margin-right: 10px; /* Add some space from the right edge */
+            margin-top: 50px;
+            overflow-x: auto;
+            max-height: 90vh; /* Restrict height to fit within background */
+            overflow-y: auto; /* Add scrolling if content exceeds height */
+        }
+
+        body::before {
+            content: "";
+            background-image: url('images/backgroung.jpg'); /* Path to your image */
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 155%;
+            height: 105%;
+            z-index: -1; /* Push the background behind everything */
+            opacity: 1; /* Adjust this for more or less transparency */
+        }
+
+        .quote-section {
+            width: 60%; /* Remaining width for quotes */
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #fff;
+            text-align: left;
+            font-size: 24px;
+            line-height: 1.6;
+            margin-left: 50px; /* Add some space from the left edge */
+        }
+
+        h1 {
+            text-align: center;
+            color: #003366;
+        }
+
+        p {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            width: 100%;
+            padding: 8px; /* Reduce input padding */
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #0044cc;
+            color: white;
+            padding: 12px; /* Reduce button padding */
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0033aa;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Left section for quotes -->
+ <!--   <div class="quote-section">
+        <h2>Inspirational Quotes</h2>
+        <p>"The beautiful thing about learning is that nobody can take it away from you." – B.B. King</p>
+        <p>"Success is no accident. It is hard work, perseverance, learning, studying, sacrifice and most of all, love of what you are doing or learning to do." – Pelé</p>
+    </div>-->
+
+    <!-- Right section for the form -->
+    <div class="container">
+        <h1>Welcome to SEG Tuition Center</h1>
+        <p>Join us today to access personalized learning content tailored just for you!</p>
+
+        <!-- Form for sign-up -->
+        <form method="POST" action="signup.php?action=signup" onsubmit="return validateForm()">
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required>
+
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="program">Select Program:</label>
+            <select id="program" name="program" required>
+                <option value="1">SMNS_NQ</option>
+                <option value="2">BENG_2</option>
+            </select>
+
+            <button type="submit">Sign Up</button>
+            <a href="login.php">Click here to sign in.</a>
+        </form>        
+    </div>
+
+    <script>
+        function validateForm() {
+            var phone = document.getElementById('phone').value;
+            if (isNaN(phone) || phone.length < 10) {
+                alert("Please enter a valid phone number");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
