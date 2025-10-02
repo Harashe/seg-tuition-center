@@ -1,15 +1,16 @@
 <?php
-// For MySQL (InfinityFree)
-$host = 'sql204.infinityfree.com';  // Replace with the correct MySQL host provided by InfinityFree
-$dbname = 'if0_37490309_seg_students_db';  // Replace with your actual database name
-$user = 'if0_37490309';  // Replace with your MySQL username
-$pass = 'Ssempt2002GMDB';  // Replace with your MySQL password
+// Render PostgreSQL database connection
+$host = "dpg-d3fd3o24d50c73a0i590-a";   // Replace with your Render host
+$port = "5432";                               // PostgreSQL default port
+$dbname = "seg_db";                  // Your database name
+$user = "seg_db_user";                          // Your username
+$pass = "ZG1hqzvV7MhD2G0KmRy1zZKqFYiIwTUx";                 // Your password
 
-// Create MySQL connection
-$conn = new mysqli($host, $user, $pass, $dbname);
+// Create PostgreSQL connection
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$pass");
 
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error . "\nError Code: " . $conn->connect_errno);
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
 }
 ?>
