@@ -1,10 +1,10 @@
 <?php
-// Render PostgreSQL database connection
-$host = "dpg-d3fd3o24d50c73a0i590-a";   // Replace with your Render host
-$port = "5432";                               // PostgreSQL default port
-$dbname = "seg_db";                  // Your database name
-$user = "seg_db_user";                          // Your username
-$pass = "ZG1hqzvV7MhD2G0KmRy1zZKqFYiIwTUx";                 // Your password
+// Get database credentials from environment variables
+$host = getenv("DB_HOST");
+$port = getenv("DB_PORT") ?: "5432";   // default port
+$dbname = getenv("DB_NAME");
+$user = getenv("DB_USER");
+$pass = getenv("DB_PASS");
 
 // Create PostgreSQL connection
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$pass");
