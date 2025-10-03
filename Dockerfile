@@ -1,31 +1,27 @@
 # Use official PHP image with Apache
 FROM php:8.2-apache
 
-# Enable Apache modules needed for .htaccess and headers
+# Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Optional: set server timezone
+# Optional: set timezone
 ENV TZ=Africa/Lusaka
 
-# Copy all website files into Apache web root
+# Copy files
 COPY . /var/www/html/
 
-# Set correct permissions (recommended for security)
+# Permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Configure Apache to use Render's $PORT at runtime
-RUN echo "Listen \${PORT}" > /etc/apache2/ports.conf && \
-    sed -i "s/:80/:${PORT}/" /etc/apache2/sites-available/000-default.conf
+# Set ServerName to avoid warnings
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Enable .htaccess overrides for /var/www/html
-RUN echo '<Directory /var/www/html/>\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/allow-htaccess.conf \
-    && a2enconf allow-htaccess
+# Force Apache to listen to Render's port
+RUN sed -i "s/Listen 80/Listen 8080/" /etc/apache2/ports.conf && \
+    sed -i "s/<VirtualHost \*:80>/<VirtualHost *:8080>/" /etc/apache2/sites-available/000-default.conf
 
-# Expose a dummy port for local runs (Render ignores EXPOSE)
+# Expose 8080 (Render replaces this with $PORT automatically)
 EXPOSE 8080
 
-# Start Apache in the foreground
-CMD ["apache2-foreground"]
+# Start Apache, dynamically replacing port with $PORT
+CMD ["/bin/bash", "-c", "sed -i \"s/8080/${PORT}/\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf && apache2-foreground"]
