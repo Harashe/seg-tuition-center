@@ -1,42 +1,32 @@
-# =========================================
-# SEG Tuition Centre - Render .htaccess
-# =========================================
-
-# Enable PHP processing
-AddHandler application/x-httpd-php .php
-
-# Set the default index files
+# -------------------------------
+# Default Index Files
+# -------------------------------
 DirectoryIndex index.php index.html
 
-# Enable PHP error reporting (development only; remove in production)
-php_flag display_errors On
-php_value error_reporting E_ALL
+# -------------------------------
+# Custom 500 Error Page
+# -------------------------------
+ErrorDocument 500 /500.html
 
-# Set PHP timezone
-php_value date.timezone Africa/Lusaka
-
-# Enable Rewrite Engine for clean URLs and HTTPS redirect
+# -------------------------------
+# Enable Rewrite Engine & Force HTTPS
+# -------------------------------
 RewriteEngine On
 
 # Redirect HTTP to HTTPS on your Render domain
 RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^ https://seg-tuitions.onrender.com%{REQUEST_URI} [L,R=301]
 
-# Optional: remove trailing slashes from URLs (for clean URLs)
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ /$1 [L,R=301]
+# -------------------------------
+# Optional PHP Settings for Development
+# -------------------------------
+# Uncomment during development only
+# php_flag display_errors On
+# php_value error_reporting E_ALL
+# php_value date.timezone Africa/Lusaka
 
-# Custom error pages
-ErrorDocument 404 /404.html
-ErrorDocument 500 /500.html
-
-# Security headers (optional but recommended)
-<IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-XSS-Protection "1; mode=block"
-    Header set X-Frame-Options "SAMEORIGIN"
-</IfModule>
-
-# Prevent directory browsing
-Options -Indexes# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule ^(.*)$ $1.php [L]
+# -------------------------------
+# Optional: Disable directory listing
+# -------------------------------
+# Only if Render allows Options in .htaccess
+# Options -Indexes
