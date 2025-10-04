@@ -1,5 +1,5 @@
 <?php
-// Get database credentials from environment variables
+// Get database credentials from Render environment variables
 $host = getenv("DB_HOST") ?: die("DB_HOST not set");
 $port = getenv("DB_PORT") ?: "5432";
 $dbname = getenv("DB_NAME") ?: die("DB_NAME not set");
@@ -16,4 +16,7 @@ $conn = pg_connect($conn_string);
 if (!$conn) {
     die("Connection failed: " . pg_last_error($conn));
 }
+
+// Optional: debug
+// echo "Connected to PostgreSQL successfully!";
 ?>
