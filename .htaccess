@@ -1,0 +1,18 @@
+# Set the default index file
+DirectoryIndex index.php index.html
+
+# Custom 500 error page (optional, ensure 500.html exists)
+ErrorDocument 500 /500.html
+
+# Enable Rewrite engine for clean URLs
+RewriteEngine On
+
+# Optional: Redirect all HTTP traffic to HTTPS
+# Only enable if you have an SSL certificate through Render
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Optional: Deny access to sensitive files
+<FilesMatch "(\.env|\.git|\.htaccess)">
+    Require all denied
+</FilesMatch>
